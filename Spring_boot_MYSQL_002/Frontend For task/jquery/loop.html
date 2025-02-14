@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<script>
+    var a=[10,203,30,40];
+    $(document).ready(function(){
+        $.each(a,function(i,d){
+            $("#dv").append("<li>"+d+"</li>")
+        })
+    })
+</script>
+<body>
+    <ul id="dv"></ul>
+    
+</body>
+</html>

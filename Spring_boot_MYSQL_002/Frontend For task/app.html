@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: "Ubuntu", sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .btn-custom {
+            width: 48%;
+        }
+
+        table {
+            border: 2px solid black;
+        }
+
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="jquery/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            displayallemp();
+
+            $("#btnadd").click(function () {
+                addEmployee();
+            });
+
+            $("#btnupdate").click(function () {
+                updateEmployee();
+            });
+        });
+
+        function addEmployee() {
+            var e = $("#empid").val();
+            var n = $("#name").val();
+            var p = $("#position").val();
+            var em = $("#email").val();
+            var s = $("#sal").val();
+
+            var employee = {
+                "id": e,
+                "name": n,
+                "position": p,
+                "email": em,
+                "salary": s
+            };
+
+            $.ajax({
+                url: 'http://localhost:9090/api/student',
+                method: 'POST',
+                data: JSON.stringify(employee),
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert("Employee Added Successfully!");
+                    clear();
+                    displayallemp();
+                }
+            });
+        }
+
+        function updateEmployee() {
+            var e = $("#empid").val();
+            var n = $("#name").val();
+            var p = $("#position").val();
+            var em = $("#email").val();
+            var s = $("#sal").val();
+
+            var employee = {
+                "id": e,
+                "name": n,
+                "position": p,
+                "email": em,
+                "salary": s
+            };
+
+            $.ajax({
+                url: 'http://localhost:9090/api/student',
+                method: 'PUT',
+                data: JSON.stringify(employee),
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert("Employee Updated Successfully!");
+                    clear();
+                    displayallemp();
+                }
+            });
+        }
+
+        function deleteEmployee(id) {
+            $.ajax({
+                url: 'http://localhost:9090/api/student/' + id,
+                method: 'DELETE',
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert("Employee Deleted Successfully!");
+                    displayallemp();
+                },
+            });
+        }
+
+        function displayallemp() {
+            $.ajax({
+                url: 'http://localhost:9090/api/student',
+                method: 'GET',
+                contentType: 'application/json',
+                success: function (resp) {
+                    $("#tblbody").empty();
+                    $.each(resp, function (i, d) {
+                        $("#tblbody").append(
+                            "<tr>" +
+                            "<td>" + d.id + "</td>" +
+                            "<td>" + d.name + "</td>" +
+                            "<td>" + d.position + "</td>" +
+                            "<td>" + d.email + "</td>" +
+                            "<td>" + d.salary + "</td>" +
+                            "<td>" +
+                            "<button onclick='viewEmployee(\"" + d.id + "\")' class='btn btn-info btn-sm'>" +
+                            "<i class='fa fa-eye'></i>" +
+                            "</button>&nbsp;" +
+                            "<button onclick='deleteEmployee(\"" + d.id + "\")' class='btn btn-danger btn-sm'>" +
+                            "<i class='fa fa-trash'></i>" +
+                            "</button>" +
+                            "</td>" +
+                            "</tr>"
+                        );
+                    });
+                }
+            });
+        }
+
+        function viewEmployee(id) {
+            $.ajax({
+                url: 'http://localhost:9090/api/student/' + id,
+                method: 'GET',
+                contentType: 'application/json',
+                success: function (resp) {
+                    $("#empid").val(resp.id);
+                    $("#name").val(resp.name);
+                    $("#position").val(resp.position);
+                    $("#email").val(resp.email);
+                    $("#sal").val(resp.salary);
+                }
+            });
+        }
+
+        function clear() {
+            $("#empid").val("");
+            $("#name").val("");
+            $("#position").val("");
+            $("#email").val("");
+            $("#sal").val("");
+        }
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <h3 class="text-center">Employee Details</h3>
+                    <form>
+                        <label for="empid" class="form-label">Employee ID</label>
+                        <input type="text" class="form-control" id="empid">
+                        <br>
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name">
+                        <br>
+                        <label for="position" class="form-label">Position</label>
+                        <input type="text" class="form-control" id="position">
+                        <br>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email">
+                        <br>
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" class="form-control" id="sal">
+                        <br>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-custom" id="btnadd">ADD</button>
+                            <button type="button" class="btn btn-success btn-custom" id="btnupdate">UPDATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="card">
+                    <h3 class="text-center">Employee List</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Email</th>
+                                <th>Salary</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

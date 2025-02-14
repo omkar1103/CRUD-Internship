@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management System</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<style>
+    #t{
+        color: black;
+        background-color: yellow;
+        border-radius: 3px;
+    }
+    #p{
+        color: black;
+        background-color: red;
+        border-radius: 3px;
+    }
+    #o{
+        background-color: blue;
+        color: white;
+
+    }
+</style>
+<body>
+    <div class="col-md-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Product Details</h2>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Product_Id</label>
+                    <input type="text" name="" id="txtid" placeholder="Enter productId" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="products">Product_name</label>
+                    <select name="products" class="form-control" id="txtname">
+                        <option value="pen">Pen</option>
+                        <option value="Pencil">Pencil</option>
+                        <option value="Books">Books</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="text" name="" id="txtprice" placeholder="Enter Price" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Quantity</label>
+                    <input type="text" placeholder="Enter the Quantity" id="txtq" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Total</label>
+                    <input type="text" name="" id="txttotal" placeholder="" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-success" id="btnadd">Submit</button>
+                <button class="btn btn-warning" id="btnupd">Update</button>
+            </div> 
+        </div>
+    </div>
+    <div class="col-md-5">
+        <table class="table table-striped" border="2">
+            <thead id="o">
+                <tr>
+                    <td>ProductId</td>
+                    <td>Product Name</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Total</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody id="tbldata"></tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4">Grand</th>
+                    <th id="gt"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script>
+        var product = [];
+        var index = -1;
+
+        $(document).ready(function () {
+            $("#txtprice, #txtq").change(function () {
+                calculate();
+            });
+
+            $("#btnadd").click(function () {
+                addproduct();
+            });
+
+            $("#btnupd").click(function () {
+                updateproduct(); 
+            });
+        });
+
+        function calculate() {
+            var p = Number($("#txtprice").val());
+            var q = Number($("#txtq").val());
+            var t = p * q;
+            $("#txttotal").val(t);
+        }
+
+        function addproduct() {
+            var id = $("#txtid").val();
+            var n = $("#txtname").val();
+            var p = $("#txtprice").val();
+            var q = $("#txtq").val();
+            var t = $("#txttotal").val();
+            var st = {"Product_Id": id, "Product_name": n, "Price": p, "Quantity": q, "Total": t};
+            product.push(st);
+            alert("Product added successfully");
+            clear();
+            display();
+        }
+
+        function clear() {
+            $("#txtid, #txtname, #txtprice, #txtq, #txttotal").val("");
+        }
+
+        function display() {
+            $("#tbldata").empty();
+            var grandTotal = 0;  
+            $.each(product, function (i, d) {
+                $("#tbldata").append("<tr><td>" + d.Product_Id + "</td><td>" + d.Product_name + "</td><td>" + d.Price + "</td><td>" + d.Quantity + "</td><td>" + d.Total + "</td><td>" + "<input type='button' id='t' value='VIEW' onclick='viewproduct(" + i  + ")'/> &nbsp;"+ "<input type='button' value='DELETE' id='p' onclick='deleteproduct(" + i + ")'/>" + "</td></tr>");
+                
+                grandTotal += parseFloat(d.Total);  
+            });
+            $("#gt").text(grandTotal);  
+        }
+
+        function updateproduct() {
+            var id = $("#txtid").val();
+            var n = $("#txtname").val();
+            var p = $("#txtprice").val();
+            var q = $("#txtq").val();
+            var t = $("#txttotal").val();
+            var st = {"Product_Id": id, "Product_name": n, "Price": p, "Quantity": q, "Total": t};
+            product[index] = st;
+            alert("Product updated successfully");
+            clear();
+            display();
+        }
+
+        function viewproduct(v) {
+            index = v;
+            var st = product[index];
+            $("#txtid").val(st.Product_Id);
+            $("#txtname").val(st.Product_name);
+            $("#txtprice").val(st.Price);
+            $("#txtq").val(st.Quantity);
+            $("#txttotal").val(st.Total);
+        }
+
+        function deleteproduct(v) {
+            product.splice(v, 1);
+            alert("Product deleted successfully");
+            display();
+        }
+    </script>
+</body>
+</html>

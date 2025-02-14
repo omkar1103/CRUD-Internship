@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<script>
+    var city=[];
+    var index=-1;
+    $(document).ready(function(){
+        $("#btncity").click(function(){
+            addcity();
+        })
+    })
+    function addcity(){
+        var c=$("#txtcity").val();
+        var i;
+        city.push(c);
+        alert("City Added Sucessfully");
+        $("#txtcity").val("");
+        display();
+    }
+    function display(){
+        $("#dv").empty();
+        $.each(city,function(i,d){
+            $("dv").append("<li>"+d+"</li>");
+        })
+    }
+
+</script>
+
+<body>
+    Enter city: <input type="text" name="" id="#txtcity"><br><br>
+    <input type="button" value="ADD" id="btncity"><br>
+    <hr>
+    <ul id="dv"></ul>
+    
+</body>
+</html>

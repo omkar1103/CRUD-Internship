@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<script>
+    $(document).ready(function(){
+        $("#btnadd").click(function(){
+            addition();
+        })
+        $("#btnsub").click(function(){
+            subraction();
+        })
+        $("#btnmul").click(function(){
+            multiplication();
+        })
+        $("#btndiv").click(function(){
+            division();
+        })
+    })
+    function addition(){
+        var a=Number($("#txt1").val());
+        var b=Number($("#txt2").val());
+        var c=a+b;
+        $("#dv").html("Addition="+c);
+
+    }
+    function subraction(){
+        var a=Number($("#txt1").val());
+        var b=Number($("#txt2").val());
+        var c=a-b;
+        $("#dv").html("Subraction="+c);
+    }
+    function multiplication(){
+        var a=Number($("#txt1").val());
+        var b=Number($("#txt2").val());
+        var c=a*b;
+        $("#dv").html("Multiplication="+c);
+
+    }
+    function division(){
+        var a=Number($("#txt1").val());
+        var b=Number($("#txt2").val());
+        var c=(a/b).toFixed(2);
+        $("#dv").html("Division="+c);
+    }
+</script>
+
+<body>
+    Enter No 1: <input type="text" name="" id="txt1"><br><br>
+    Enter No 2: <input type="text" name="" id="txt2"><br><br>
+    <input type="button" value="ADD" id="btnadd">
+    <input type="button" value="SUB" id="btnsub">
+    <input type="button" value="MUL" id="btnmul">
+    <input type="button" value="DIV" id="btndiv">
+    <hr>
+    <div id="dv"></div>
+    
+</body>
+</html>
