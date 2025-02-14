@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<script>
+    $(document).ready(function(){
+        $("#btncal").click(function(){
+            percentage();
+        })
+    })
+    function percentage(){
+        var Rno=Number($("#rno").val());
+        var Name=($("#name").val());
+        var e=Number($("#eng").val());
+        var m=Number($("#maths").val());
+        var s=Number($("#sci").val());
+        var total=e+m+s;
+        var per=total/3;
+        var data="";
+        data=data+"<h1>Rollno:"+Rno+"<h1>";
+        data=data+"<h1>Name:"+Name+"<h1>";
+        data=data+"<h1>TOTAL:"+total+"marks<h1>";
+        data=data+"<h1>PERCENTAGE:"+per+"%<h1>";
+    
+        $("#dv").html(data);
+
+
+    }
+</script>
+<body>
+    Roll No: <input type="text" name="" id="rno"><br><br>
+    Name: <input type="text" name="" id="name"><br><br>
+    English: <input type="text" name="" id="eng"><br><br>
+    Maths: <input type="text" name="" id="maths"><br><br>
+    Science: <input type="text" name="" id="sci"><br><br>
+    <input type="button" value="Calculate" id="btncal"><br><br>
+    <hr>
+    <div id="dv"></div>
+    
+
+    
+</body>
+</html>

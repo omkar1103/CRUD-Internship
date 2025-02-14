@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+
+</head>
+<script>
+    var student=[];
+    $(document).ready(function(){
+        $("btnadd").click(function(){
+        addstudent();
+        })
+        $("btnupd").click(function(){
+        updatestud();
+        })
+    })
+    function addcity(){
+        var rno=Number($("#rno").val());
+        var n=($("#name").val());
+        var e=($("#eng").val());
+        var m=($("#maths").val());
+        var s=($("#sci").val());
+        var st={"Rollno":rno,"Name":n,"English":e,"maths":m,"Science":s};
+        student.push(st);
+        alert("Student added succesfully");
+        clear();
+        display();
+    }
+    function clear(){
+        $("#rno","#name","eng","maths","sci","tot","per").val("");
+
+    }
+    function display(){
+        var i;
+        var data="";
+        $.each(city,function(i,d){
+            var total=Number(d.English)+Number(d.maths)+Number(d.Science);
+            var Percentage=(total/3).toFixed(2);
+            var g="";
+            col="";
+            if(Percentage>=35){
+                g="pass";
+                col="green"
+            }
+            else{
+                g="fail";
+                col="red";
+            }
+            var Percentage=(total/3).toFixed(2);
+            data+="<tr><td>"+d.Rollno+"</td><td>"+d.Name+"</td><td>"+d.English+"</td><td>"+d.maths+"</td><td>"+d.Science+"</td><td>"+d.total+"</td><td>"+d.Percentage+"</td><td>"+d.g+"</td><td>Action</td></tr>";
+        })
+        $("#tbldata").html(data);
+    }
+
+</script>
+<body>
+    <table>
+        <tr>
+        <td>Rollno</td>
+        <td>
+            <input type="text" name="" id="rno">
+        </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" id="name">
+            </td>
+        </tr>
+        <tr>
+            <td>English</td>
+            <td>
+                <input type="text" name="" id="eng"> 
+            </td>
+        </tr>
+        <tr>
+            <td>Maths</td>
+            <td>
+                <input type="text" name="" id="maths">
+            </td>
+        </tr>
+        <tr>
+            <td>Science</td>
+            <td>
+                <input type="text" name="" id="sci">
+            </td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>
+                <input type="text" name="" id="tot">
+
+            </td>
+        </tr>
+        <tr>
+            <td>Percentage</td>
+            <td>
+                <input type="text" name="" id="per">
+            </td>
+        </tr>
+        <tr>
+            <td>Grade</td>
+            <td>
+                <input type="text" name="" id="grd">
+
+            </td>
+        </tr>
+
+    </table><br>
+    <input type="button" value="ADD" id="btnadd">
+    <input type="button" value="UPDATE" id="btnupd"><br><br>
+    <table border="=1">
+        <thead>
+            <tr>
+                <th>Rollno</th>
+                <th>Name</th>
+                <th>English</th>
+                <th>Maths</th>
+                <th>Science</th>
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+    </table>
+    <tbody id="tbldata"></tbody>
+    
+</body>
+</html>
